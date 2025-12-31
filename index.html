@@ -71,25 +71,6 @@
         50%  { transform: scale(0.92); opacity: 0.40; }
         100% { transform: scale(1); opacity: 0.55; }
     }
-
-    /* Tap pop */
-    @keyframes tapPop {
-        0%   { transform: scale(1); }
-        50%  { transform: scale(0.94); }
-        100% { transform: scale(1); }
-    }
-
-    /* Wink animation */
-    @keyframes wink {
-        0%   { transform: scaleY(1); }
-        40%  { transform: scaleY(0.15); }
-        100% { transform: scaleY(1); }
-    }
-
-    /* Hidden talk mode — no visuals */
-    #talk-mode {
-        display: none;
-    }
 </style>
 </head>
 
@@ -100,51 +81,8 @@
     <div id="shadow"></div>
 </div>
 
-<script>
-    const hand = document.getElementById("hand");
+<!-- Load interaction engine -->
+<script src="hand.js?v=999"></script>
 
-    /* Tap interaction */
-    hand.addEventListener("click", () => {
-        hand.style.animation = "tapPop 0.25s ease";
-        setTimeout(() => {
-            hand.style.animation = "float 4s ease-in-out infinite";
-        }, 250);
-    });
-
-    /* Double-tap wink */
-    let lastTap = 0;
-    hand.addEventListener("click", () => {
-        const now = Date.now();
-        if (now - lastTap < 300) {
-            hand.style.animation = "wink 0.35s ease";
-            setTimeout(() => {
-                hand.style.animation = "float 4s ease-in-out infinite";
-            }, 350);
-        }
-        lastTap = now;
-    });
-
-    /* Press-and-hold Talk Mode (invisible) */
-    let pressTimer;
-    hand.addEventListener("mousedown", () => {
-        pressTimer = setTimeout(() => {
-            console.log("Talk Mode Activated (silent)");
-        }, 550);
-    });
-
-    hand.addEventListener("mouseup", () => clearTimeout(pressTimer));
-hand.addEventListener("mouseleave", () => { clearTimeout(pressTimer); hand.style.animation = "float 4s ease-in-out infinite"; 
-                                          }); 
-</script> 
-    
-<!-- Load interaction engine --> <script src="hand.js?v=999"></script>
-
-</body> 
+</body>
 </html>
-
-
-
-
-
-
-
