@@ -41,7 +41,7 @@
         width: 40vmin;
         height: auto;
         filter: drop-shadow(0 0 12px rgba(255, 200, 120, 0.25));
-        transform-origin: center bottom;
+        transform-origin: center;
         transition: transform 0.15s ease-out;
         animation: idleBounce 3.2s ease-in-out infinite;
     }
@@ -52,17 +52,18 @@
         100% { transform: translateY(0px) scale(1); }
     }
 
-    @keyframes wave {
-        0%   { transform: rotate(0deg); }
-        20%  { transform: rotate(12deg); }
-        40%  { transform: rotate(-12deg); }
-        60%  { transform: rotate(10deg); }
-        80%  { transform: rotate(-10deg); }
-        100% { transform: rotate(0deg); }
+    /* Wiggle animation (visible on any PNG) */
+    @keyframes wiggle {
+        0%   { transform: rotate(0deg) scale(1); }
+        20%  { transform: rotate(4deg) scale(1.03); }
+        40%  { transform: rotate(-4deg) scale(0.97); }
+        60%  { transform: rotate(3deg) scale(1.02); }
+        80%  { transform: rotate(-3deg) scale(0.98); }
+        100% { transform: rotate(0deg) scale(1); }
     }
 
-    .wave {
-        animation: wave 1.4s ease-in-out;
+    .wiggle {
+        animation: wiggle 1.2s ease-in-out;
     }
 </style>
 </head>
@@ -79,15 +80,14 @@
 
     let trackingEnabled = false;
 
-    // Wave on load
+    // Wiggle on load
     window.addEventListener("load", () => {
-        hand.classList.add("wave");
+        hand.classList.add("wiggle");
 
-        // Enable pointer tracking AFTER the wave finishes
         setTimeout(() => {
-            hand.classList.remove("wave");
+            hand.classList.remove("wiggle");
             trackingEnabled = true;
-        }, 1500);
+        }, 1300);
     });
 
     function trackPointer(x, y) {
