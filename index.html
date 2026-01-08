@@ -16,7 +16,6 @@
         font-family: system-ui, sans-serif;
     }
 
-    /* Lantern-lit vignette */
     body::before {
         content: "";
         position: fixed;
@@ -47,14 +46,12 @@
         animation: idleBounce 3.2s ease-in-out infinite;
     }
 
-    /* Idle bounce */
     @keyframes idleBounce {
         0%   { transform: translateY(0px) scale(1); }
         50%  { transform: translateY(-6px) scale(1.015); }
         100% { transform: translateY(0px) scale(1); }
     }
 
-    /* Wave animation */
     @keyframes wave {
         0%   { transform: rotate(0deg); }
         20%  { transform: rotate(12deg); }
@@ -73,7 +70,6 @@
 <body>
 
 <div id="hand-container">
-    <!-- Your mascot image -->
     <img id="hand" src="hand.png" alt="Hand Mascot" />
 </div>
 
@@ -81,16 +77,22 @@
     const hand = document.getElementById("hand");
     const container = document.getElementById("hand-container");
 
-    /* Wave once on load */
+    let trackingEnabled = false;
+
+    // Wave on load
     window.addEventListener("load", () => {
         hand.classList.add("wave");
+
+        // Enable pointer tracking AFTER the wave finishes
         setTimeout(() => {
             hand.classList.remove("wave");
+            trackingEnabled = true;
         }, 1500);
     });
 
-    /* Pointer tracking tilt */
     function trackPointer(x, y) {
+        if (!trackingEnabled) return;
+
         const rect = container.getBoundingClientRect();
         const cx = rect.width / 2;
         const cy = rect.height / 2;
