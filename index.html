@@ -42,15 +42,30 @@
         width: 40vmin;
         height: auto;
         filter: drop-shadow(0 0 12px rgba(255, 200, 120, 0.25));
-        transform-origin: center;
+        transform-origin: center bottom;
         transition: transform 0.15s ease-out;
         animation: idleBounce 3.2s ease-in-out infinite;
     }
 
+    /* Idle bounce */
     @keyframes idleBounce {
         0%   { transform: translateY(0px) scale(1); }
         50%  { transform: translateY(-6px) scale(1.015); }
         100% { transform: translateY(0px) scale(1); }
+    }
+
+    /* Wave animation */
+    @keyframes wave {
+        0%   { transform: rotate(0deg); }
+        20%  { transform: rotate(12deg); }
+        40%  { transform: rotate(-12deg); }
+        60%  { transform: rotate(10deg); }
+        80%  { transform: rotate(-10deg); }
+        100% { transform: rotate(0deg); }
+    }
+
+    .wave {
+        animation: wave 1.4s ease-in-out;
     }
 </style>
 </head>
@@ -58,7 +73,7 @@
 <body>
 
 <div id="hand-container">
-    <!-- This will load once you upload hand.png into the repo -->
+    <!-- Your mascot image -->
     <img id="hand" src="hand.png" alt="Hand Mascot" />
 </div>
 
@@ -66,6 +81,15 @@
     const hand = document.getElementById("hand");
     const container = document.getElementById("hand-container");
 
+    /* Wave once on load */
+    window.addEventListener("load", () => {
+        hand.classList.add("wave");
+        setTimeout(() => {
+            hand.classList.remove("wave");
+        }, 1500);
+    });
+
+    /* Pointer tracking tilt */
     function trackPointer(x, y) {
         const rect = container.getBoundingClientRect();
         const cx = rect.width / 2;
